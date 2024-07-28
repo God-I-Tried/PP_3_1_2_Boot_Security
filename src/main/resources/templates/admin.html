@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<h1>All Users</h1>
+<br>
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>First Name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>User role</th>
+        <th>Admin role</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="user : ${allUsers}">
+        <td>
+            <a th:utext="${user.getId()}" ></a>
+        </td>
+        <form method="post" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+            <input type="hidden" name="id" th:value="${user.getId()}">
+            <td>
+                <label for="Edit_username"></label>
+                <input type="text" id="Edit_username" name="username" th:value="${user.getUsername()}">
+            </td>
+
+            <td>
+                <label for="Edit_password"></label>
+                <input type="password" id="Edit_password" name="password" th:value="${user.getPassword()}">
+            </td>
+
+            <td>
+                <label for="Edit_firstName"></label>
+                <input type="text" id="Edit_firstName" name="firstName" th:value="${user.getFirstName()}">
+            </td>
+
+            <td>
+                <label for="Edit_lastName"></label>
+                <input type="text" id="Edit_lastName" name="lastName" th:value="${user.getLastName()}">
+            </td>
+
+            <td>
+                <label for="Edit_Email"></label>
+                <input type="email" id="Edit_email" name="email" th:value="${user.getEmail()}">
+            </td>
+
+            <td th:each="role : ${allRoles}">
+                <input
+                        type="checkbox"
+                        name="selectedRoles"
+                        th:id="'role' + ${role.getId()}"
+                        th:value="${role.getId()}"
+                        th:checked="${user.getRoles().contains(role)}"
+                />
+                <!--<label th:for="'role' + ${role.getId()}" th:text="${role.getAuthority()}">-->
+                </label>
+            </td>
+
+            <td>
+                <button type="submit">Edit</button>
+            </td>
+
+        </form>
+
+        <td>
+            <a th:href="@{/admin/delete(id=${user.getId()})}">
+                <input th:if="${currentUserId != user.getId()}" type="submit" value="Delete"/>
+            </a>
+        </td>
+
+
+
+    </tr>
+</table>
+<br>
+<h2>Add New User</h2>
+<form th:action="@{/admin/add}" method="post" th:object="${addUser}">
+    <label for="Add_username">Username:</label>
+    <input type="text" id="Add_username" name="username" th:field="*{username}"><br>
+
+    <label for="Add_password">Password:</label>
+    <input type="password" id="Add_password" name="password" th:field="*{password}"><br>
+
+    <label for="Add_firstName">First Name:</label>
+    <input type="text" id="Add_firstName" name="firstName" th:field="*{firstName}"><br>
+
+    <label for="Add_lastName">Last Name:</label>
+    <input type="text" id="Add_lastName" name="lastName" th:field="*{lastName}"><br>
+
+    <label for="Add_email">Email:</label>
+    <input type="email" id="Add_email" name="email" th:field="*{email}"><br>
+
+    <label>Roles:</label><br>
+    <div th:each="role : ${allRoles}">
+        <input type="checkbox" name="selectedRoles" th:value="${role.id}" th:text="${role.name}">
+    </div>
+
+    <button type="submit">Add User</button>
+</form>
+
+<form th:action="@{/admin/user}" method="GET">
+    <button type="submit">Show my profile</button>
+</form>
+
+<form th:action="@{/logout}" method="POST">
+    <button type="submit">exit</button>
+</form>
+
+</body>
+</html>
