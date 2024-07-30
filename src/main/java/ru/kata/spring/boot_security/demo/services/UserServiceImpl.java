@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user, List<Long> roles) {
+    public void addUser(User user, List<Long> roles) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setFirstName(user.getFirstName());
         user.setLastName(user.getLastName());
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public void editUser(Long id, String username, String password, String firstName, String lastName, String email, List<Role> roles) {
         User user = userRepository.getById(id);
         user.setUsername(username);
-        if (!password.isEmpty()) {
+        if (password != null && !password.isEmpty()) {
             user.setPassword(passwordEncoder.encode(password));
         }
         user.setFirstName(firstName);

@@ -15,18 +15,17 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-public class UserController {
+@RequestMapping("/admin")
+public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
-    private final RoleRepository roleRepository;
 
-    public UserController(UserService userService, RoleService roleService, RoleRepository roleRepository, RoleRepository roleRepository1) {
+    public AdminController(UserService userService, RoleService roleService, RoleRepository roleRepository, RoleRepository roleRepository1) {
         this.userService = userService;
         this.roleService = roleService;
-        this.roleRepository = roleRepository;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("")
     public String showAdminPage(Model model, Principal principal) {
         model.addAttribute("allUsers", userService.getAll());
         model.addAttribute("allRoles", roleService.findAll());
@@ -36,44 +35,30 @@ public class UserController {
         return "admin";
     }
 
-    @PostMapping("/admin/edit/{id}")
+    @PostMapping("/edit/{id}")
     public String updateUser(@ModelAttribute("addUser") User user, @RequestParam(name = "selectedRoles", required = false) Long[] selectedRoles, @PathVariable("id") Long id) {
         List<Role> roles = new ArrayList<>();
         if (selectedRoles != null && selectedRoles.length > 0) {
-            roles = roleRepository.findAllById(Arrays.asList(selectedRoles));
+            roles = roleService.findAllById(Arrays.asList(selectedRoles));
         }
         userService.editUser(id, user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmail(), roles);
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/delete")
+    @DeleteMapping("/delete")
     public String deletedUser( @RequestParam(value = "id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
 
-    @PostMapping("/admin/add")
+    @PostMapping("/add")
     public String addUser(@ModelAttribute("user") User user, @RequestParam(name = "selectedRoles", required = false) Long[] selectedRoles) {
         List<Long> roles = new ArrayList<>();
         if (selectedRoles != null && selectedRoles.length > 0) {
             roles = Arrays.asList(selectedRoles);
         }
-        userService.add(user, roles);
+        userService.addUser(user, roles);
         return "redirect:/admin";
-    }
-
-    @GetMapping("/user")
-    public String showUserPage(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", userService.showUser(user.getId()));
-        return "user";
-    }
-
-    @GetMapping("/admin/user")
-    public String showAdminInfo(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", userService.showUser(user.getId()));
-        return "user";
     }
 
 }

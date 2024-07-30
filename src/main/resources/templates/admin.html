@@ -26,7 +26,7 @@
         <td>
             <a th:utext="${user.getId()}" ></a>
         </td>
-        <form method="post" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+        <form th:action="@{/admin/edit/{id}(id=${user.getId()})}" method="post" th:object="${user}">
             <input type="hidden" name="id" th:value="${user.getId()}">
             <td>
                 <label for="Edit_username"></label>
@@ -61,8 +61,6 @@
                         th:value="${role.getId()}"
                         th:checked="${user.getRoles().contains(role)}"
                 />
-                <!--<label th:for="'role' + ${role.getId()}" th:text="${role.getAuthority()}">-->
-                </label>
             </td>
 
             <td>
@@ -72,9 +70,10 @@
         </form>
 
         <td>
-            <a th:href="@{/admin/delete(id=${user.getId()})}">
+            <form th:action="@{/admin/delete(id=${user.getId()})}" th:method="DELETE">
                 <input th:if="${currentUserId != user.getId()}" type="submit" value="Delete"/>
-            </a>
+                <!--<button type="submit">Delete</button>-->
+            </form>
         </td>
 
 
@@ -83,7 +82,7 @@
 </table>
 <br>
 <h2>Add New User</h2>
-<form th:action="@{/admin/add}" method="post" th:object="${addUser}">
+<form th:action="@{/admin/add}" method="POST" th:object="${addUser}">
     <label for="Add_username">Username:</label>
     <input type="text" id="Add_username" name="username" th:field="*{username}"><br>
 
@@ -107,7 +106,7 @@
     <button type="submit">Add User</button>
 </form>
 
-<form th:action="@{/admin/user}" method="GET">
+<form th:action="@{/user}" method="GET">
     <button type="submit">Show my profile</button>
 </form>
 

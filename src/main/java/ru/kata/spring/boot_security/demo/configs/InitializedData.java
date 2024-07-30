@@ -29,7 +29,7 @@ public class InitializedData {
             user1.setFirstName("first name 1");
             user1.setLastName("last name 1");
             user1.setEmail("email1@gmail.com");
-            userServiceImpl.add(user1, List.of(userRole.getId()));
+            userServiceImpl.addUser(user1, List.of(userRole.getId()));
 
             User user2 = new User();
             user2.setUsername("user2");
@@ -37,7 +37,7 @@ public class InitializedData {
             user2.setFirstName("first name 2");
             user2.setLastName("last name 2");
             user2.setEmail("email2@gmail.com");
-            userServiceImpl.add(user2, List.of(userRole.getId()));
+            userServiceImpl.addUser(user2, List.of(userRole.getId()));
 
             User admin = new User();
             admin.setUsername("admin");
@@ -45,7 +45,7 @@ public class InitializedData {
             admin.setFirstName("admin");
             admin.setLastName("admin");
             admin.setEmail("admin@gmail.com");
-            userServiceImpl.add(admin, List.of(adminRole.getId(), userRole.getId()));
+            userServiceImpl.addUser(admin, List.of(adminRole.getId(), userRole.getId()));
         };
     }
 }

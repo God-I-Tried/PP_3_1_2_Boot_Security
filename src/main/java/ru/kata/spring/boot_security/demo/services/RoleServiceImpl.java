@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -25,17 +25,22 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role save(Role role) {
+    public Role saveRole(Role role) {
         return roleRepository.save(role);
     }
 
     @Override
-    public Role update(Role role) {
+    public Role updateRole(Role role) {
         return roleRepository.save(role);
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteRole(Long id) {
         roleRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Role> findAllById(List<Long> asList) {
+        return roleRepository.findAllById(asList);
     }
 }
