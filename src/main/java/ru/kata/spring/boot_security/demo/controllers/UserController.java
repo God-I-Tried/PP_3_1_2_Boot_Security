@@ -23,7 +23,7 @@ public class UserController {
         this.roleService = roleService;
     }
 
-    @GetMapping("")
+    @GetMapping()
     public String showUserPage(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", userService.showUser(user.getId()));
