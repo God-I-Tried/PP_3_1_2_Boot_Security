@@ -1,14 +1,12 @@
-package ru.kata.spring.boot_security.demo.configs;
+package ru.kata.spring.boot_security.demo.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.kata.spring.boot_security.demo.entities.Role;
-import ru.kata.spring.boot_security.demo.entities.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
-
-import java.util.List;
+import ru.kata.spring.boot_security.demo.entity.Role;
+import ru.kata.spring.boot_security.demo.entity.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 @Configuration
 public class InitializedData {
@@ -29,7 +27,7 @@ public class InitializedData {
             user1.setFirstName("first name 1");
             user1.setLastName("last name 1");
             user1.setEmail("email1@gmail.com");
-            userServiceImpl.addUser(user1, List.of(userRole.getId()));
+            userServiceImpl.addUser(user1, new Long[] {userRole.getId()});
 
             User user2 = new User();
             user2.setUsername("user2");
@@ -37,7 +35,7 @@ public class InitializedData {
             user2.setFirstName("first name 2");
             user2.setLastName("last name 2");
             user2.setEmail("email2@gmail.com");
-            userServiceImpl.addUser(user2, List.of(userRole.getId()));
+            userServiceImpl.addUser(user2, new Long[] {userRole.getId()});
 
             User admin = new User();
             admin.setUsername("admin");
@@ -45,7 +43,7 @@ public class InitializedData {
             admin.setFirstName("admin");
             admin.setLastName("admin");
             admin.setEmail("admin@gmail.com");
-            userServiceImpl.addUser(admin, List.of(adminRole.getId(), userRole.getId()));
+            userServiceImpl.addUser(admin, new Long[] {adminRole.getId(), userRole.getId()});
         };
     }
 }
