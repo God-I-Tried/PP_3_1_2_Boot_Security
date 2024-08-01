@@ -19,7 +19,7 @@ public interface UserService extends UserDetailsService {
 
     User showUser(long id);
 
-    User findByUsername(String username);
+    User findUserByUsername(String username);
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;

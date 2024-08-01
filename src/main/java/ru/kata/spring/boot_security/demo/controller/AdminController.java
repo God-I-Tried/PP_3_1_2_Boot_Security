@@ -25,7 +25,7 @@ public class AdminController {
     public String showAdminPage(Model model, Principal principal) {
         model.addAttribute("allUsers", userService.getAll());
         model.addAttribute("allRoles", roleService.findAll());
-        User user = userService.findByUsername(principal.getName());
+        User user = userService.findUserByUsername(principal.getName());
         model.addAttribute("currentUserId", user.getId());
         model.addAttribute("addUser", new User());
         return "admin";
