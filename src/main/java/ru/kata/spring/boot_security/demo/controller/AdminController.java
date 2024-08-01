@@ -45,10 +45,6 @@ public class AdminController {
 
     @PostMapping("/add")
     public String addUser(@ModelAttribute("user") User user, @RequestParam(name = "selectedRoles", required = false) Long[] selectedRoles) {
-//        List<Long> roles = new ArrayList<>();
-//        if (selectedRoles != null && selectedRoles.length > 0) {
-//            roles = Arrays.asList(selectedRoles);
-//        }
         if (selectedRoles != null && selectedRoles.length > 0) {
             userService.addUser(user, selectedRoles);
         }
